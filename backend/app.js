@@ -7,9 +7,10 @@ const bodyParser = require('body-parser');
 
 // Importar rutas
 const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // Variables de entorno
-const api = process.env.API_URL || '/api';
+const api = process.env.API_URL;
 
 // Middlewares
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ mongoose.connect(process.env.CONNECTION_URL, {
 
 // Usar rutas importadas
 app.use(api, productRoutes);
+app.use(api, userRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
