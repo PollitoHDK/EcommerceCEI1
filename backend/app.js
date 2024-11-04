@@ -4,10 +4,16 @@ const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors'); 
+
 
 // Importar rutas
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true 
+}));
 
 // Variables de entorno
 const api = process.env.API_URL;
@@ -32,7 +38,7 @@ app.use(api, productRoutes);
 app.use(api, userRoutes);
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}/`);
 });
