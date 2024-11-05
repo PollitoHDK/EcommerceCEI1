@@ -15,6 +15,8 @@ app.use(cors({
   credentials: true 
 }));
 
+
+
 // Variables de entorno
 const api = process.env.API_URL;
 
