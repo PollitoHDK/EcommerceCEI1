@@ -19,13 +19,13 @@ export default function Navbar({ user, logout }) {
     }
     if (user.role === 'admin') {
       return [
-        { name: 'Products', href: '/products' },
+        { name: 'Stock', href: '/stock' },
         { name: 'Orders', href: '/orders' },
         { name: 'Log Out', onClick: logout },
       ];
     }
     return [
-      { name: 'Products', href: '/products' },
+      { name: 'Products', href: '/' },
       { name: 'Shopping Cart', href: '/cart' },
       { name: 'Log Out', onClick: logout },
     ];
