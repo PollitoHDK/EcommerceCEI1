@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors'); 
+const connectDB = require("./database/config");
 
 
 // Importar rutas
@@ -15,6 +16,17 @@ app.use(cors({
   credentials: true 
 }));
 
+connectDB();
+
+let bucket;
+(() => {
+  mongoose.connection.on("connected", () => {
+    bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+      bucketName: "filesBucket",
+    });
+  });
+})();
+
 
 
 // Variables de entorno
@@ -24,16 +36,6 @@ const api = process.env.API_URL;
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
-// Conectar a la base de datos
-mongoose.connect(process.env.CONNECTION_URL, {
-  dbName: 'ecommerce-database'
-})
-.then(() => {
-  console.log('Connected to the database');
-})
-.catch((err) => {
-  console.error('Database connection error:', err);
-});
 
 // Usar rutas importadas
 app.use(api, productRoutes);

@@ -10,7 +10,7 @@ router.post('/register', async (req, res) => {
     const { name, email, password, role } = req.body;
 
     // Encriptar la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword =  await bcrypt.hash(password, 10);
 
     // Crear un nuevo usuario con la contraseña encriptada
     const user = new User({
