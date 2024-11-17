@@ -34,11 +34,12 @@ Sigue estos pasos para poner en funcionamiento los servidores del proyecto.
 
 ## Paso a paso para funcionamiento de la APP
 1. Viajar a directorio /backend
-2. prender servidor con 'npm run start'
+2. Prender servidor con 'npm run start'
 3. Viajar a directorio /frontend
-4. prender servidor con 'npm start'
-5. Ir a 'http://localhost:3000/' (Ojo, revisar que no haya conflicto de puertos en tu máquina local)
-6. Crear cuenta como admin o cliente y realizar flujo de actividad.
+4. Prender servidor con 'npm start'
+5. Instalar paquetes y dependencias necesarias para el proyecto con 'npm install'
+6. Ir a 'http://localhost:3000/' (Ojo, revisar que no haya conflicto de puertos en tu máquina local)
+7. Crear cuenta como admin o cliente y realizar flujo de actividad.
 
 ## Nota importante: 
 La DB funciona mediante un cluster de MONGO, por ende si intentas acceder con la API en tu local a la DB, debes asegurarte que en MongoDB esté registrada tu IP para poder acceder desde tu máquina y tu lugar de acceso.
