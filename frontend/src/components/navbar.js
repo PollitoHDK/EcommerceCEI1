@@ -27,6 +27,7 @@ export default function Navbar({ user, logout }) {
     return [
       { name: 'Products', href: '/' },
       { name: 'Shopping Cart', href: '/cart' },
+      { name: 'History', href: '/history' },
       { name: 'Log Out', onClick: logout },
     ];
   };
