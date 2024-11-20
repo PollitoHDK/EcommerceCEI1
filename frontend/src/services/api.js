@@ -35,3 +35,13 @@ export const deleteProduct = async (productId) => {
 export const getUserDetails = async (userId) => {
   return await api.get(`/users/${userId}`); 
 };
+
+// Añadir un producto
+export const addToCart = async (product) => {
+  return await api.post('/cart', {
+    userId: 'REAL_ID',
+    productId: product.id,
+    quantity: 1,
+    priceAtPurchase: product.price,
+  });
+}
