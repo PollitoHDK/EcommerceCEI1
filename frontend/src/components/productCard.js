@@ -2,10 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { addToCart as addToCartService } from '../../src/services/api'; 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, user}) => {
     const handleAddToCart = async () => {
         try {
-            await addToCartService(product);
+            await addToCartService(product, user);
             alert('Product added to cart');
         } catch (error) {
             console.error('Error adding to cart', error);

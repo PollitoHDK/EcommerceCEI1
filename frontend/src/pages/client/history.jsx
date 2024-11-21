@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {cartHistory} from '../../services/api';
+import HistoryCard from '../../components/HistoryCard';
 
 const History = () => {
   const [history, setHistory] = useState([]);
@@ -7,7 +9,8 @@ const History = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await axios.get('/api/history/REAL_ID'); // No se como lo estan validando entonces aca va eso
+        const user = JSON.parse(localStorage.getItem('user')); 
+        const response = await cartHistory(user)
         setHistory(response.data);
       } catch (error) {
         console.error('Error obtaining the user`s history:', error);
@@ -18,26 +21,18 @@ const History = () => {
   }, []);
 
   if (history.length === 0) {
-    return <p>There are no purchases done by the user</p>;
+    return (
+      <div className="flex justify-center items-center h-full mt-32">
+        <p className="text-5xl font-semibold text-gray-600">There are no purchases done by the user :b</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>Purchase history</h2>
+    <div className="container mx-auto p-8 max-w-4xl">
+      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Purchase History</h2>
       {history.map((purchase) => (
-        <div key={purchase._id}>
-          <h3>Purchase done on: {new Date(purchase.purchaseDate).toLocaleString()}</h3>
-          <p>Total: ${purchase.totalAmount}</p>
-          <h4>Products:</h4>
-          <ul>
-            {purchase.products.map((product) => (
-              <li key={product.productId}>
-                Product: {product.productId}, Quantity: {product.quantity}, price: ${product.priceAtPurchase}
-              </li>
-            ))}
-          </ul>
-          <hr />
-        </div>
+        <HistoryCard key={purchase._id} purchase={purchase} />
       ))}
     </div>
   );

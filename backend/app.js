@@ -11,7 +11,7 @@ const connectDB = require("./database/config");
 // Importar rutas
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
-//const cartRoutes = require('./routes/cartRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true 
@@ -41,7 +41,7 @@ app.use(morgan('tiny'));
 // Usar rutas importadas
 app.use(api, productRoutes);
 app.use(api, userRoutes);
-//app.use(api, cartRoutes);
+app.use(api, cartRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3001;

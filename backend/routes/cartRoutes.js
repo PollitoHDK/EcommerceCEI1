@@ -4,37 +4,54 @@ const UserCartHistory = require('../models/userCartHistoryModel');
 const Purchase = require('../models/compraModel');
 
 router.post('/cart', async (req, res) => {
-    const { userId, productId, quantity, priceAtPurchase } = req.body;
-  
-    try {
-        let cart = await Purchase.findOne({ userId });
-  
-        if (!cart) {
-            cart = new Purchase({
-                userId,
-                products: [],
-                totalAmount: 0,
-            });
-        }
-  
-        const existingProductIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-  
-        if (existingProductIndex >= 0) {
-            cart.products[existingProductIndex].quantity += quantity;
-        } else {
-            cart.products.push({ productId, quantity, priceAtPurchase });
-        }
-  
-        cart.totalAmount = cart.products.reduce((sum, product) => sum + product.quantity * product.priceAtPurchase, 0);
-  
-        await cart.save();
-  
-        res.status(200).json(cart);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error adding product to the cart' });
+  const { userId, productId, name, image, quantity, priceAtPurchase } = req.body;
+
+  try {
+      let cart = await Purchase.findOne({ userId, isActive: true });
+
+      if (!cart) {
+          cart = new Purchase({
+              userId,
+              products: [],
+              totalAmount: 0,
+          });
+      }
+
+      const existingProductIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+
+      if (existingProductIndex >= 0) {
+          cart.products[existingProductIndex].quantity += quantity;
+      } else {
+          cart.products.push({ productId, name, image, quantity, priceAtPurchase });
+      }
+
+      cart.totalAmount = cart.products.reduce((sum, product) => sum + product.quantity * product.priceAtPurchase, 0);
+
+      await cart.save();
+
+      res.status(200).json(cart);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error adding product to the cart' });
+  }
+});
+
+router.get('/cart/:userId', async (req, res) => {
+  const { userId } = req.params; 
+
+  try {
+    let cart = await Purchase.findOne({ userId, isActive: true });
+
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found for this user' }); 
     }
-  });
+
+    res.status(200).json(cart); 
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving the cart' }); 
+  }
+});
   
   router.post('/cart/checkout', async (req, res) => {
     const { userId } = req.body;

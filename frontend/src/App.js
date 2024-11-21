@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import Home from './pages/client/home';
 import Register from './pages/auth';
 import StockManagement from './pages/admin/stockManagement';
+import Cart from './pages/client/cart'
+import History from './pages/client/history'
 import './index.css';
 import { ThemeProvider } from '@material-tailwind/react';
 import Navbar from './components/navbar';
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/signin" element={<Register setUser={setUser} />} />
         <Route path="/signup" element={<Register setUser={setUser} />} />
         <Route path="/stock" element={<StockManagement />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </ThemeProvider>
   );

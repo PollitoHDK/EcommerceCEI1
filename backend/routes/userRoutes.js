@@ -54,11 +54,12 @@ router.post('/login', async (req, res) => {
     );
 
     // Responder con el token y el rol del usuario
-    res.status(200).json({ message: 'Login successful', token, role: user.role });
+    res.status(200).json({ message: 'Login successful', token, role: user.role, userId: user._id });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 // Agregar esta ruta en tu archivo de rutas (por ejemplo, userRoutes.js)

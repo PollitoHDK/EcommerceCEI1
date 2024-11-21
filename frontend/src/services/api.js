@@ -12,6 +12,20 @@ export const loginUser = async (credentials) => {
   return await api.post('/login', credentials);
 };
 
+export const getUserInfo = async (token) => {
+  try {
+    const response = await api.get('/user-info/', {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    });
+
+    console.log(response.data); 
+  } catch (error) {
+    console.error('Error al obtener la información del usuario', error);
+  }
+};
+
 // Obtener todos los productos
 export const fetchProducts = async () => {
   return await api.get('/products');
@@ -32,16 +46,32 @@ export const deleteProduct = async (productId) => {
   return await api.delete(`/products/${productId}`);
 };
 
-export const getUserDetails = async (userId) => {
-  return await api.get(`/users/${userId}`); 
-};
 
 // Añadir un producto
-export const addToCart = async (product) => {
+export const addToCart = async (product, user) => {
   return await api.post('/cart', {
-    userId: 'REAL_ID',
-    productId: product.id,
+    userId: user.userId,
+    productId: product._id,
+    name: product.name,
+    image: "", //DEJO ESTO AQUI PARA QUE LO CAMBIEMOS POR LA IMAGEN CUANDO LAS TENGAMOS (SI LAS TENEMOS)
     quantity: 1,
     priceAtPurchase: product.price,
   });
-}
+};
+
+// Traer los productos de un carrito.
+export const fetchCart = async (user) => {
+  return api.get(`/cart/${user.userId}`);
+};
+
+// Hacer el cambio de carrito y registrar la compra.
+export const cartCheckout = async (user) => {
+  return await api.post('/cart/checkout', {
+    userId: user.userId, 
+  });
+};
+
+// Obtener los recibos de un usuario
+export const cartHistory = async (user) => {
+  return await api.get(`/history/${user.userId}`); 
+};

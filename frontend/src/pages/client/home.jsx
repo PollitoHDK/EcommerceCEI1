@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { fetchProducts } from '../../services/api';
+import { fetchProducts} from '../../services/api';
 import ProductCard from '../../components/productCard'; 
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        setUser(user);
         const response = await fetchProducts();
         setProducts(response.data); 
       } catch (err) {
@@ -34,7 +38,7 @@ const Home = () => {
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} user={user} />
           ))}
         </div>
       </div>
