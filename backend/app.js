@@ -12,6 +12,7 @@ const connectDB = require("./database/config");
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true 
@@ -36,6 +37,9 @@ const api = process.env.API_URL;
 // Middlewares
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+
+// Agregar esto en app.js después de los middlewares
+app.use('/uploads', express.static('public/uploads'));
 
 
 // Usar rutas importadas

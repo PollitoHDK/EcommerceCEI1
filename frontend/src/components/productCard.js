@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { addToCart as addToCartService } from '../../src/services/api'; 
 
 const ProductCard = ({ product, user}) => {
@@ -17,7 +16,7 @@ const ProductCard = ({ product, user}) => {
       <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
         {product.image ? (
           <img
-            src={`data:${product.image.contentType};base64`}
+            src={`http://localhost:3001${product.image}`} 
             alt={product.imageAlt}
             className="h-full w-full object-cover object-center"
           />

@@ -53,7 +53,7 @@ export const addToCart = async (product, user) => {
     userId: user.userId,
     productId: product._id,
     name: product.name,
-    image: "", //DEJO ESTO AQUI PARA QUE LO CAMBIEMOS POR LA IMAGEN CUANDO LAS TENGAMOS (SI LAS TENEMOS)
+    image: product.image, //DEJO ESTO AQUI PARA QUE LO CAMBIEMOS POR LA IMAGEN CUANDO LAS TENGAMOS (SI LAS TENEMOS)
     quantity: 1,
     priceAtPurchase: product.price,
   });

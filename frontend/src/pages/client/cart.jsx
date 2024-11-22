@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { fetchCart, cartCheckout} from '../../services/api';
-import CartCard from '../../components/CartCard';
+import CartCard from '../../components/cartCard';
 import { generatePDF } from '../../components/PurchaseReceipt';
 
 

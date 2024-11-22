@@ -16,7 +16,7 @@ const CartCard = ({ product }) => {
       <div className="w-48 h-48 bg-gray-200 flex items-center justify-center rounded-lg overflow-hidden">
         {product.image ? (
           <img
-            src={product.image}
+            src={`http://localhost:3001${product.image}`} 
             alt={product.name}
             className="w-full h-full object-cover"
           />
