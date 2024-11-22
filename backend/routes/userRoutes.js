@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 
 // Registrar un nuevo usuario
@@ -10,7 +10,7 @@ router.post('/register', async (req, res) => {
     const { name, email, password, role } = req.body;
 
     // Encriptar la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword =  await bcrypt.hash(password, 10);
 
     // Crear un nuevo usuario con la contraseña encriptada
     const user = new User({
@@ -53,8 +53,26 @@ router.post('/login', async (req, res) => {
       { expiresIn: '1h' } // El token expirará en 1 hora
     );
 
-    // Responder con el token
-    res.status(200).json({ message: 'Login successful', token });
+    // Responder con el token y el rol del usuario
+    res.status(200).json({ message: 'Login successful', token, role: user.role, userId: user._id });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
+// Agregar esta ruta en tu archivo de rutas (por ejemplo, userRoutes.js)
+router.get('/users/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId).select('-password'); // No devolver la contraseña
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

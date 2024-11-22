@@ -10,13 +10,17 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  quantity: {
+  stock: {
     type: Number,
     required: true,
+  },
+  image: {
+    type: String, // Cambia a tipo String para almacenar la URL
   },
 }, {
   timestamps: true,
 });
+
 
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
